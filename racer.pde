@@ -37,8 +37,9 @@ void setup() {
   player = new Car();
 
   road = createShape();
-  PImage img = loadImage("road.png");
+  PImage img = loadImage("road_px.png");
   road.beginShape();
+  road.noStroke();
   road.texture(img);
   road.vertex( SZ, 0,  SZ, 0, 0);
   road.vertex(-SZ, 0,  SZ, 100, 0);
@@ -50,10 +51,10 @@ void setup() {
 void keyPressed() {
   
   if (key == 'j') {
-    player.pos.y -= 100;
+    player.pos.y -= 20;
   }
   if (key == 'k') {
-    player.pos.y += 110;
+    player.pos.y += 21;
   }
   if (key == 'h') {
     player.pos.x -= 10;
@@ -68,13 +69,25 @@ void keyPressed() {
     player.pos.z += 11;
   }
 
+  if (key == 's') {
+    rotx += 0.01;
+  }
+  if (key == 'd') {
+    rotx -= 0.011;
+  }
+
   println("pos " + str(player.pos.x) + " " + str(player.pos.y) + " " + str(player.pos.z) );
 }
 
+float rotx = -PI/8;
+
 void draw() {
   background(41, 43, 180);
+  translate(width/2, height/2, 0);
+  rotateX(rotx);
+  translate(0, -height/2, 0);
   pushMatrix();
-  translate(-player.pos.x, -player.pos.y, player.pos.z);
+  translate(-player.pos.x, -player.pos.y + height/2, player.pos.z);
   for (int i = -10; i < 10; i++) {
   for (int j = -10; j < 10; j++) {
     pushMatrix();
