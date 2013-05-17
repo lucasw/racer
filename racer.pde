@@ -20,15 +20,27 @@ class Car
 {
   
   PVector pos;
+  PVector vel;
+  float wheel_dir;
+  float wheel_vel;
 
   Car() {
     pos = new PVector(0,0,0);
+    wheel_vel = 0;
+    wheel_dir = 0;
   }
 
   void draw() {
+    //pos = pos + vel;
+    //vel *= 0.95;
+
+    pos.z += wheel_vel * cos(wheel_dir);
+    pos.x += wheel_vel * sin(wheel_dir);
+
     pushMatrix();
     final int ht = 50;
     translate(pos.x, pos.y - ht/2, pos.z);
+    rotateY(wheel_dir);
     fill(200,200,33);
     box(100, 70, 250);
     popMatrix();
@@ -60,16 +72,16 @@ void setup() {
 void keyPressed() {
   
   if (key == 'j') {
-    player.pos.y -= 20;
+    player.wheel_vel -= 0.21;
   }
   if (key == 'k') {
-    player.pos.y += 21;
+    player.wheel_vel += 0.2;
   }
   if (key == 'h') {
-    player.pos.x -= 10;
+    player.wheel_dir -= 0.010;
   }
   if (key == 'l') {
-    player.pos.x += 11;
+    player.wheel_dir += 0.011;
   }
   if (key == 'i') {
     player.pos.z -= 10;
@@ -95,10 +107,11 @@ void draw() {
   translate(width/2, height/2, 0);
   rotateX(rotx);
   //translate(0, -height/2, 0);
+  int pz = (int)player.pos.z;
   pushMatrix();
   translate(-player.pos.x, -player.pos.y, -player.pos.z);
-  for (int i = -10; i < 10; i++) {
-  for (int j = -10; j < 10; j++) {
+  for (int i = -6; i < 6; i++) {
+  for (int j = - 15; j <  4; j++) {
     pushMatrix();
     translate(i*SZ*2, 0, j*SZ*2);
     //road.draw();
