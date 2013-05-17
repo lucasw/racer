@@ -24,6 +24,15 @@ class Car
   Car() {
     pos = new PVector(0,0,0);
   }
+
+  void draw() {
+    pushMatrix();
+    final int ht = 50;
+    translate(pos.x, pos.y - ht/2, pos.z);
+    fill(200,200,33);
+    box(100, 70, 250);
+    popMatrix();
+  }
 }
 
 Car player;
@@ -85,9 +94,9 @@ void draw() {
   background(41, 43, 180);
   translate(width/2, height/2, 0);
   rotateX(rotx);
-  translate(0, -height/2, 0);
+  //translate(0, -height/2, 0);
   pushMatrix();
-  translate(-player.pos.x, -player.pos.y + height/2, player.pos.z);
+  translate(-player.pos.x, -player.pos.y, -player.pos.z);
   for (int i = -10; i < 10; i++) {
   for (int j = -10; j < 10; j++) {
     pushMatrix();
@@ -97,5 +106,7 @@ void draw() {
     popMatrix();
   }
   }
+
+  player.draw();
   popMatrix();
 }
